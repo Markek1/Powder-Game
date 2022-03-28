@@ -140,18 +140,6 @@ void Game::GameLoop()
 {
 	while (running)
 	{
-		// Test particles that spawn forever
-		for (uint32_t y = 20; y < 25; y++)
-			for (uint32_t x = 100; x < 105; x++)
-				engine.grid.grid[y * engine.grid.size.x + x] = { 1, ParticleType::SolidMovable, false };
-		for (uint32_t y = 20; y < 25; y++)
-			for (uint32_t x = 550; x < 555; x++)
-				engine.grid.grid[y * engine.grid.size.x + x] = { 3, ParticleType::SolidMovable, false };
-		for (uint32_t y = 20; y < 25; y++)
-			for (uint32_t x = 1000; x < 1005; x++)
-				engine.grid.grid[y * engine.grid.size.x + x] = { 4, ParticleType::SolidMovable, false };
-
-
 		// Everything having to do with the UI, user input and the game itself
 		SDL_GetMouseState(&mousePos.x, &mousePos.y);
 
@@ -166,7 +154,20 @@ void Game::GameLoop()
 
 		// Everything engine related
 		if (!paused)
+		{
 			engine.Update();
+
+			// Test particles that spawn forever
+			for (uint32_t y = 20; y < 25; y++)
+				for (uint32_t x = 100; x < 105; x++)
+					engine.grid.grid[y * engine.grid.size.x + x] = { 1, ParticleType::SolidMovable, false };
+			for (uint32_t y = 20; y < 25; y++)
+				for (uint32_t x = 550; x < 555; x++)
+					engine.grid.grid[y * engine.grid.size.x + x] = { 3, ParticleType::SolidMovable, false };
+			for (uint32_t y = 20; y < 25; y++)
+				for (uint32_t x = 1000; x < 1005; x++)
+					engine.grid.grid[y * engine.grid.size.x + x] = { 4, ParticleType::SolidMovable, false };
+		}
 
 
 		// Everything graphics related
