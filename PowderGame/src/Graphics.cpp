@@ -98,17 +98,6 @@ bool Graphics::Initialize()
 }
 
 
-// the format here is BGRA
-//std::vector<Vector4<uint8_t>> IDToColor = {
-//	{0, 0, 0, 255},
-//	{0, 215, 255, 255},
-//	{255, 100, 100, 255},
-//	{80, 80, 255, 255},
-//	{120, 255, 60, 255},
-//	{0, 180, 255, 255}
-//};
-
-
 void Graphics::Render(SDL_Texture* pTexture, Grid* grid)
 {
 	// The Back Buffer texture may be stored with an extra bit of width (pitch) on the video card in order to properly
