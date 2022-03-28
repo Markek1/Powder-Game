@@ -184,7 +184,8 @@ void Game::Run()
 
 	GameLoop();
 
-	fpsCounter.PrintStats();
-
 	graphics.Shutdown();
+
+	fpsCounter.PrintStats();
+	std::cin.get();
 }

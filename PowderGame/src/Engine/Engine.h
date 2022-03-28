@@ -32,8 +32,6 @@ public:
 class Engine
 {
 public:
-
-
 	Grid grid;
 
 	// exists to be incremented each update and used to make particles prefer left or right

@@ -33,7 +33,6 @@ public:
 };
 
 
-// If result is equal to 0, prints out errorMessage
 int32_t error(int32_t result, std::string errorMessage);
 
 
