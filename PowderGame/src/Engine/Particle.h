@@ -24,7 +24,7 @@ public:
 };
 
 
-static std::vector<Particle> particleArr
+const static std::vector<Particle> particleArr
 {
 	// 0
 	{"NULL",

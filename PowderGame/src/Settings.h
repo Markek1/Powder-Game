@@ -2,8 +2,11 @@
 
 #include <iostream>
 
+#include "Helpers.h"
 
-constexpr static const uint32_t g_windowWidth = 1200;
-constexpr static const uint32_t g_windowHeight = 800;
 
-constexpr static const char* g_windowTitle = "Powder Game";
+static Vector2<uint32_t> windowSize = { 1200, 800 };
+static Vector2<uint32_t> gridSize = { 600, 400};
+static uint32_t pxPerUnit = 2; 
+
+static const char* windowTitle = "Powder Game";

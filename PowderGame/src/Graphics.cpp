@@ -19,7 +19,7 @@ SDL_Window* Graphics::CreateCenteredWindow(uint32_t width, uint32_t height, std:
 	const int32_t x = DM.w / 2 - width / 2;
 	const int32_t y = DM.h / 2 - height / 2;
 
-	SDL_Window* pWindow = SDL_CreateWindow(g_windowTitle, x, y, width, height,
+	SDL_Window* pWindow = SDL_CreateWindow(windowTitle, x, y, width, height,
 		SDL_WINDOW_ALLOW_HIGHDPI);
 
 	error(!pWindow, "Failed to create Window\n");
@@ -32,7 +32,7 @@ SDL_Window* Graphics::CreateCenteredWindow(uint32_t width, uint32_t height, std:
 SDL_Texture* Graphics::CreateBackBufferTexture(SDL_Renderer* pRenderer)
 {
 	SDL_Texture* pTexture = SDL_CreateTexture(pRenderer, SDL_PIXELFORMAT_ARGB8888,
-		SDL_TEXTUREACCESS_STREAMING, g_windowWidth, g_windowHeight);
+		SDL_TEXTUREACCESS_STREAMING, windowSize.x, windowSize.y);
 
 	error(!pTexture, "Failed to create Back Buffer Texture\n");
 
@@ -66,7 +66,7 @@ bool Graphics::Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO);
 
-	pWindow = CreateCenteredWindow(g_windowWidth, g_windowHeight, g_windowTitle);
+	pWindow = CreateCenteredWindow(windowSize.x, windowSize.y, windowTitle);
 
 	if (error(!pWindow, "No Window. Aborting..."))
 	{
@@ -113,13 +113,20 @@ void Graphics::Render(SDL_Texture* pTexture, Grid* grid)
 	// as it will always be a multiple of four
 	pitch /= sizeof(uint32_t);
 
-	for (uint32_t y = 0; y < grid->size.y; y++)
-		for (uint32_t x = 0; x < grid->size.x; x++)
+	uint32_t yPx = 0;
+	for (uint32_t yU = 0; yU < grid->size.y; yU++)
+		for (uint32_t i = 0; i < pxPerUnit; i++, yPx++)
 		{
-			uint32_t cellPos = y * grid->size.x + x;
+			uint32_t xPx = 0;
+			for (uint32_t xU = 0; xU < grid->size.x; xU++)
+				for (uint32_t j = 0; j < pxPerUnit; j++, xPx++)
+				{
+					uint32_t pixelPos = yPx * windowSize.x + xPx;
+					uint32_t cellPos = yU * grid->size.x + xU;
 
-			// treating the 4 bytes as an unsigned int allows for fast conversion
-			pPixelBuffer[cellPos] = *((uint32_t*)&particleArr[grid->grid[cellPos].id].color);
+					// treating the 4 bytes as an unsigned int allows for fast conversion
+					pPixelBuffer[pixelPos] = *((uint32_t*)&particleArr[grid->grid[cellPos].id].color);
+				}
 		}
 
 	SDL_UnlockTexture(pTexture);

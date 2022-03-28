@@ -39,7 +39,7 @@ void FPSCounter::PrintStats()
 
 bool Game::Initialize()
 {
-	if (error(!engine.Initialize({ g_windowWidth, g_windowHeight }), "Engine initialization failed. Aborting...\n"))
+	if (error(!engine.Initialize({ gridSize.x, gridSize.y}), "Engine initialization failed. Aborting...\n"))
 		return false;
 
 	if (error(!graphics.Initialize(), "Graphics initialization failed. Aborting...\n"))
@@ -143,6 +143,8 @@ void Game::GameLoop()
 	{
 		// Everything having to do with the UI, user input and the game itself
 		SDL_GetMouseState(&mousePos.x, &mousePos.y);
+		mousePos.x /= pxPerUnit;
+		mousePos.y /= pxPerUnit;
 
 		SDL_Event event;
 		HandleEvents(event);

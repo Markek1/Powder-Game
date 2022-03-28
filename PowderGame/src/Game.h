@@ -36,7 +36,7 @@ private:
 	bool mouseLeftDown = false;
 	bool mouseRightDown = false;
 	Vector2<int> mousePos;
-	uint32_t cursorSize = 35;
+	uint32_t cursorSize = 20;
 
 	void fillCursorArea(bool clear);
 
