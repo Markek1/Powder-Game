@@ -7,6 +7,8 @@
 #include "Helpers.h"
 #include "Settings.h"
 
+#include "Engine/Particle.h"
+
 
 SDL_Window* Graphics::CreateCenteredWindow(uint32_t width, uint32_t height, std::string title)
 {
@@ -97,14 +99,14 @@ bool Graphics::Initialize()
 
 
 // the format here is BGRA
-std::vector<Vector4<uint8_t>> IDToColor = {
-	{0, 0, 0, 255},
-	{0, 215, 255, 255},
-	{255, 100, 100, 255},
-	{80, 80, 255, 255},
-	{120, 255, 60, 255},
-	{0, 180, 255, 255}
-};
+//std::vector<Vector4<uint8_t>> IDToColor = {
+//	{0, 0, 0, 255},
+//	{0, 215, 255, 255},
+//	{255, 100, 100, 255},
+//	{80, 80, 255, 255},
+//	{120, 255, 60, 255},
+//	{0, 180, 255, 255}
+//};
 
 
 void Graphics::Render(SDL_Texture* pTexture, Grid* grid)
@@ -124,8 +126,12 @@ void Graphics::Render(SDL_Texture* pTexture, Grid* grid)
 
 	for (uint32_t y = 0; y < grid->size.y; y++)
 		for (uint32_t x = 0; x < grid->size.x; x++)
+		{
+			uint32_t cellPos = y * grid->size.x + x;
+
 			// treating the 4 bytes as an unsigned int allows for fast conversion
-			pPixelBuffer[y * grid->size.x + x] = *((uint32_t*)IDToColor.data() + grid->grid[y * grid->size.x + x].id);
+			pPixelBuffer[cellPos] = *((uint32_t*)&particleArr[grid->grid[cellPos].id].color);
+		}
 
 	SDL_UnlockTexture(pTexture);
 

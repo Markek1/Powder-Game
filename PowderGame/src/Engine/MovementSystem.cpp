@@ -6,11 +6,16 @@
 
 bool MovementSystem::SolidMovableMovement::TryMoveDown(uint32_t x, uint32_t y, Grid& grid)
 {
-	if (grid.grid[(y + 1) * grid.size.x + x].type != ParticleType::SolidMovable &&
-		grid.grid[(y + 1) * grid.size.x + x].type != ParticleType::SolidImmovable)
+	uint32_t sourcePos = y * grid.size.x + x;
+	uint32_t targetPos = (y + 1) * grid.size.x + x;
+
+	uint8_t id = grid.grid[targetPos].id;
+
+	if (particleArr[id].type != ParticleType::SolidMovable &&
+		particleArr[id].type != ParticleType::SolidImmovable)
 	{
-		grid.grid[(y + 1) * grid.size.x + x] = grid.grid[y * grid.size.x + x];
-		grid.grid[y * grid.size.x + x] = emptyCell;
+		grid.grid[targetPos] = grid.grid[sourcePos];
+		grid.grid[sourcePos] = emptyCell;
 		return true;
 	}
 	return false;
@@ -19,12 +24,17 @@ bool MovementSystem::SolidMovableMovement::TryMoveDown(uint32_t x, uint32_t y, G
 
 bool MovementSystem::SolidMovableMovement::TryMoveDownLeft(uint32_t x, uint32_t y, Grid& grid)
 {
-	if (grid.grid[(y + 1) * grid.size.x + x - 1].type != ParticleType::SolidMovable &&
-		grid.grid[(y + 1) * grid.size.x + x - 1].type != ParticleType::SolidImmovable &&
+	uint32_t sourcePos = y * grid.size.x + x;
+	uint32_t targetPos = (y + 1) * grid.size.x + x - 1;
+
+	uint8_t id = grid.grid[targetPos].id;
+
+	if (particleArr[id].type != ParticleType::SolidMovable &&
+		particleArr[id].type != ParticleType::SolidImmovable &&
 		x > 0)
 	{
-		grid.grid[(y + 1) * grid.size.x + x - 1] = grid.grid[y * grid.size.x + x];
-		grid.grid[y * grid.size.x + x] = emptyCell;
+		grid.grid[targetPos] = grid.grid[sourcePos];
+		grid.grid[sourcePos] = emptyCell;
 		return true;
 	}
 	return false;
@@ -33,12 +43,17 @@ bool MovementSystem::SolidMovableMovement::TryMoveDownLeft(uint32_t x, uint32_t 
 
 bool MovementSystem::SolidMovableMovement::TryMoveDownRight(uint32_t x, uint32_t y, Grid& grid)
 {
-	if (grid.grid[(y + 1) * grid.size.x + x + 1].type != ParticleType::SolidMovable &&
-		grid.grid[(y + 1) * grid.size.x + x + 1].type != ParticleType::SolidImmovable &&
+	uint32_t sourcePos = y * grid.size.x + x;
+	uint32_t targetPos = (y + 1) * grid.size.x + x + 1;
+
+	uint8_t id = grid.grid[targetPos].id;
+
+	if (particleArr[id].type != ParticleType::SolidMovable &&
+		particleArr[id].type != ParticleType::SolidImmovable &&
 		x + 1 < grid.size.x)
 	{
-		grid.grid[(y + 1) * grid.size.x + x + 1] = grid.grid[y * grid.size.x + x];
-		grid.grid[y * grid.size.x + x] = emptyCell;
+		grid.grid[targetPos] = grid.grid[sourcePos];
+		grid.grid[sourcePos] = emptyCell;
 		return true;
 	}
 	return false;

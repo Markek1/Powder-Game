@@ -12,11 +12,9 @@ struct Cell
 {
 public:
 	uint8_t id;
-	ParticleType type;
-
 	bool processed;
 };
-static Cell emptyCell = { 0, ParticleType::Null, false };
+static Cell emptyCell = { 0, false};
 
 
 class Grid

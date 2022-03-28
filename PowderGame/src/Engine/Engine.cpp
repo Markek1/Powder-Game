@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "Engine.h"
+#include "Particle.h"
 #include "MovementSystem.h"
 
 #include "../Helpers.h"
@@ -59,13 +60,17 @@ void Engine::Update()
 	{
 		for (int32_t x = startX; x != endX + incrementX; x += incrementX)
 		{
-			switch (grid.grid[y * grid.size.x + x].type)
+			uint32_t sourcePos = y * grid.size.x + x;
+
+			uint8_t id = grid.grid[sourcePos].id;
+
+			switch (particleArr[id].type)
 			{
 			case SolidMovable:
-				if (grid.grid[y * grid.size.x + x].processed || y == grid.size.y - 1)
+				if (grid.grid[sourcePos].processed || y == grid.size.y - 1)
 					break;
 
-				grid.grid[y * grid.size.x + x].processed = true;
+				grid.grid[sourcePos].processed = true;
 
 				if (MovementSystem::SolidMovableMovement::TryMoveDown(x, y, grid))
 					break;

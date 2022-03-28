@@ -66,22 +66,20 @@ void Game::fillCursorArea(bool clear)
 	uint32_t startY = std::max(0, (int32_t)mousePos.y - (int32_t)cursorSize / 2);
 	uint32_t endY = std::min(engine.grid.size.y - 1, mousePos.y + cursorSize / 2);
 
-	if (clear)
-		for (uint32_t y = startY; y <= endY; y++)
-			for (uint32_t x = startX; x <= endX; x++)
-			{
-				Cell* cell = &engine.grid.grid[y * engine.grid.size.x + x];
-				*cell = { 0, ParticleType::Null, false };
-			}
+	for (uint32_t y = startY; y <= endY; y++)
+		for (uint32_t x = startX; x <= endX; x++)
+		{
+			Cell* cell = &engine.grid.grid[y * engine.grid.size.x + x];
 
-	else
-		for (uint32_t y = startY; y <= endY; y++)
-			for (uint32_t x = startX; x <= endX; x++)
-			{
-				Cell* cell = &engine.grid.grid[y * engine.grid.size.x + x];
+			// I'm pretty sure the compiler optimizes this, so it shouldn't 
+			// actually be checking it each iteration in the release build
+			// and the debug build is unusable anyway so it doesn't matter
+			if (clear)
+				*cell = { 0, ParticleType::NullParticle };
+			else
 				if (cell->id == 0)
-					*cell = { currentSelectedId, ParticleType::SolidMovable, false };
-			}
+					*cell = { currentSelectedId, false };
+		}
 }
 
 
@@ -111,6 +109,7 @@ void Game::HandleEvents(SDL_Event& event)
 				mouseLeftDown = true;
 
 				break;
+
 			case SDL_BUTTON_RIGHT:
 				mouseRightDown = true;
 
@@ -118,6 +117,7 @@ void Game::HandleEvents(SDL_Event& event)
 			}
 
 			break;
+
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button)
 			{
@@ -125,6 +125,7 @@ void Game::HandleEvents(SDL_Event& event)
 				mouseLeftDown = false;
 
 				break;
+
 			case SDL_BUTTON_RIGHT:
 				mouseRightDown = false;
 
@@ -160,13 +161,13 @@ void Game::GameLoop()
 			// Test particles that spawn forever
 			for (uint32_t y = 20; y < 25; y++)
 				for (uint32_t x = 100; x < 105; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 1, ParticleType::SolidMovable, false };
+					engine.grid.grid[y * engine.grid.size.x + x] = { 1, false };
 			for (uint32_t y = 20; y < 25; y++)
 				for (uint32_t x = 550; x < 555; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 3, ParticleType::SolidMovable, false };
+					engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
 			for (uint32_t y = 20; y < 25; y++)
 				for (uint32_t x = 1000; x < 1005; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 4, ParticleType::SolidMovable, false };
+					engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
 		}
 
 
