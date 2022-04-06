@@ -62,10 +62,10 @@ void Engine::update()
 		{
 			Cell& cell = grid.grid[y * grid.size.x + x];
 
-			if (cell.m_processed)
+			if (cell.processed)
 				continue;
 
-			bool (*updateFunc)(int x, int y, Grid& grid) = elements[cell.m_elementId].update;
+			bool (*updateFunc)(int x, int y, Grid& grid) = elements[cell.elementId].update;
 			if (updateFunc)
 				updateFunc(x, y, grid);
 		}
@@ -73,5 +73,5 @@ void Engine::update()
 
 	for (int y = 0; y < grid.size.y; y++)
 		for (int x = 0; x < grid.size.x; x++)
-			grid.grid[y * grid.size.x + x].m_processed = false;
+			grid.grid[y * grid.size.x + x].processed = false;
 }

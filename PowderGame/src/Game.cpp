@@ -9,12 +9,12 @@
 
 bool FPSCounter::initialize()
 {
-	m_totalTicks = 0;
-	m_totalFramesRendered = 0;
-	m_lastTick = 0;
+	totalTicks = 0;
+	totalFramesRendered = 0;
+	lastTick = 0;
 
-	m_lastTick = SDL_GetPerformanceCounter();
-	m_firstFrame = false;
+	lastTick = SDL_GetPerformanceCounter();
+	firstFrame = false;
 
 	return true;
 }
@@ -22,24 +22,24 @@ bool FPSCounter::initialize()
 
 void FPSCounter::update()
 {
-	m_currentTick = SDL_GetPerformanceCounter();
-	m_totalTicks += m_currentTick - m_lastTick;
-	m_lastTick = m_currentTick;
-	++m_totalFramesRendered;
+	currentTick = SDL_GetPerformanceCounter();
+	totalTicks += currentTick - lastTick;
+	lastTick = currentTick;
+	++totalFramesRendered;
 }
 
 
 void FPSCounter::printStats()
 {
-	std::cout << "Total Frames:    " << m_totalFramesRendered << "\n";
-	std::cout << "Total Time:      " << static_cast<double>(m_totalTicks) / SDL_GetPerformanceFrequency() << "s\n";
-	std::cout << "Average FPS:     " << static_cast<double>(m_totalFramesRendered) * SDL_GetPerformanceFrequency() / m_totalTicks << "\n";
+	std::cout << "Total Frames:    " << totalFramesRendered << "\n";
+	std::cout << "Total Time:      " << static_cast<double>(totalTicks) / SDL_GetPerformanceFrequency() << "s\n";
+	std::cout << "Average FPS:     " << static_cast<double>(totalFramesRendered) * SDL_GetPerformanceFrequency() / totalTicks << "\n";
 }
 
 
 bool Game::initialize()
 {
-	if (!catch_error(engine.initialize({ g_gridSize.x, g_gridSize.y}), "Engine initialization failed. Aborting...\n"))
+	if (!catch_error(engine.initialize({ gridSize.x, gridSize.y}), "Engine initialization failed. Aborting...\n"))
 		return false;
 
 	if (!catch_error(graphics.initialize(), "Graphics initialization failed. Aborting...\n"))
@@ -77,7 +77,7 @@ void Game::fillCursorArea(bool clear)
 			if (clear)
 				cell = { 0, false };
 			else
-				if (cell.m_elementId == 0)
+				if (cell.elementId == 0)
 					cell = { currentSelectedId, false };
 		}
 }
@@ -143,8 +143,8 @@ void Game::gameLoop()
 	{
 		// Everything having to do with the UI, user input and the game itself
 		SDL_GetMouseState(&mousePos.x, &mousePos.y);
-		mousePos.x /= g_pxPerUnit;
-		mousePos.y /= g_pxPerUnit;
+		mousePos.x /= pxPerUnit;
+		mousePos.y /= pxPerUnit;
 
 		SDL_Event event;
 		handleEvents(event);
@@ -174,7 +174,7 @@ void Game::gameLoop()
 
 
 		// Everything graphics related
-		graphics.render(graphics.pTexture, engine.grid);
+		graphics.render(graphics.texture, engine.grid);
 
 
 		fpsCounter.update();

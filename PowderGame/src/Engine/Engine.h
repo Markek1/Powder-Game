@@ -9,8 +9,8 @@
 struct Cell
 {
 public:
-	uint8_t m_elementId;
-	bool m_processed;
+	uint8_t elementId{0};
+	bool processed{false};
 };
 
 

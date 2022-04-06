@@ -5,9 +5,9 @@
 
 bool tryMoveTo_SolidMovable(Cell& sourceCell, Cell& targetCell)
 {
-	Element& targetElement = elements[targetCell.m_elementId];
+	Element& targetElement = elements[targetCell.elementId];
 
-	if (targetElement.m_type != ElementType::solid)
+	if (targetElement.type != ElementType::solid)
 	{
 		std::swap(sourceCell, targetCell);
 
@@ -24,7 +24,7 @@ bool update_SolidMovable(int x, int y, Grid& grid)
 		return false;
 
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
-	sourceCell.m_processed = true;
+	sourceCell.processed = true;
 
 	if (tryMoveTo_SolidMovable(sourceCell, grid.grid[(y + 1) * grid.size.x + x]))
 		return true;
