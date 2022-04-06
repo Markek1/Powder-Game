@@ -10,16 +10,16 @@
 class Graphics
 {
 private:
-	SDL_Window* CreateCenteredWindow(uint32_t width, uint32_t height, std::string title);
-	SDL_Texture* CreateBackBufferTexture(SDL_Renderer* pRenderer);
+	SDL_Window* createCenteredWindow(int width, int height, const char* title);
+	SDL_Texture* createBackBufferTexture(SDL_Renderer* pRenderer);
 
 public:
 	SDL_Window* pWindow = nullptr;
 	SDL_Renderer* pRenderer = nullptr;
 	SDL_Texture* pTexture = nullptr;
 
-	bool Initialize();
+	bool initialize();
 
-	void Render(SDL_Texture* pTexture, Grid* grid);
-	void Shutdown();
+	void render(SDL_Texture* pTexture, Grid& grid);
+	void shutdown();
 };

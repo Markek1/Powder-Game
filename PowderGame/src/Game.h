@@ -9,17 +9,17 @@
 class FPSCounter
 {
 private:
-	uint64_t totalTicks;
-	uint64_t totalFramesRendered;
-	uint64_t currentTick;
-	uint64_t lastTick;
+	uint64_t m_totalTicks;
+	uint64_t m_totalFramesRendered;
+	uint64_t m_currentTick;
+	uint64_t m_lastTick;
 
-	bool firstFrame;
+	bool m_firstFrame;
 
 public:
-	bool Initialize();
-	void Update();
-	void PrintStats();
+	bool initialize();
+	void update();
+	void printStats();
 };
 
 
@@ -32,18 +32,18 @@ private:
 	bool running = false;
 	bool paused = false;
 
-	uint8_t currentSelectedId = 2;
+	uint8_t currentSelectedId = 8;
 	bool mouseLeftDown = false;
 	bool mouseRightDown = false;
 	Vector2<int> mousePos;
-	uint32_t cursorSize = 20;
+	int cursorSize = 10;
 
 	void fillCursorArea(bool clear);
 
-	void HandleEvents(SDL_Event& event);
-	void GameLoop();
+	void handleEvents(SDL_Event& event);
+	void gameLoop();
 
 public:
-	bool Initialize();
-	void Run();
+	bool initialize();
+	void run();
 };

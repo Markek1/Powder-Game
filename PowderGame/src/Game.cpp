@@ -7,48 +7,48 @@
 #include "Engine/Engine.h"
 
 
-bool FPSCounter::Initialize()
+bool FPSCounter::initialize()
 {
-	totalTicks = 0;
-	totalFramesRendered = 0;
-	lastTick = 0;
+	m_totalTicks = 0;
+	m_totalFramesRendered = 0;
+	m_lastTick = 0;
 
-	lastTick = SDL_GetPerformanceCounter();
-	firstFrame = false;
+	m_lastTick = SDL_GetPerformanceCounter();
+	m_firstFrame = false;
 
 	return true;
 }
 
 
-void FPSCounter::Update()
+void FPSCounter::update()
 {
-	currentTick = SDL_GetPerformanceCounter();
-	totalTicks += currentTick - lastTick;
-	lastTick = currentTick;
-	++totalFramesRendered;
+	m_currentTick = SDL_GetPerformanceCounter();
+	m_totalTicks += m_currentTick - m_lastTick;
+	m_lastTick = m_currentTick;
+	++m_totalFramesRendered;
 }
 
 
-void FPSCounter::PrintStats()
+void FPSCounter::printStats()
 {
-	std::cout << "Total Frames:    " << totalFramesRendered << "\n";
-	std::cout << "Total Time:      " << static_cast<double>(totalTicks) / SDL_GetPerformanceFrequency() << "s\n";
-	std::cout << "Average FPS:     " << static_cast<double>(totalFramesRendered) * SDL_GetPerformanceFrequency() / totalTicks << "\n";
+	std::cout << "Total Frames:    " << m_totalFramesRendered << "\n";
+	std::cout << "Total Time:      " << static_cast<double>(m_totalTicks) / SDL_GetPerformanceFrequency() << "s\n";
+	std::cout << "Average FPS:     " << static_cast<double>(m_totalFramesRendered) * SDL_GetPerformanceFrequency() / m_totalTicks << "\n";
 }
 
 
-bool Game::Initialize()
+bool Game::initialize()
 {
-	if (error(!engine.Initialize({ gridSize.x, gridSize.y}), "Engine initialization failed. Aborting...\n"))
+	if (!catch_error(engine.initialize({ g_gridSize.x, g_gridSize.y}), "Engine initialization failed. Aborting...\n"))
 		return false;
 
-	if (error(!graphics.Initialize(), "Graphics initialization failed. Aborting...\n"))
+	if (!catch_error(graphics.initialize(), "Graphics initialization failed. Aborting...\n"))
 	{
-		graphics.Shutdown();
+		graphics.shutdown();
 		return false;
 	}
 
-	if (error(!fpsCounter.Initialize(), "FPS counter initialization failed. Aborting...\n"))
+	if (!catch_error(fpsCounter.initialize(), "FPS counter initialization failed. Aborting...\n"))
 		return false;
 
 	running = true;
@@ -60,30 +60,30 @@ bool Game::Initialize()
 
 void Game::fillCursorArea(bool clear)
 {
-	uint32_t startX = std::max(0, (int32_t)mousePos.x - (int32_t)cursorSize / 2);
-	uint32_t endX = std::min(engine.grid.size.x - 1, mousePos.x + cursorSize / 2);
+	int startX = std::max(0, mousePos.x - cursorSize / 2);
+	int endX = std::min(engine.grid.size.x - 1, mousePos.x + cursorSize / 2);
 
-	uint32_t startY = std::max(0, (int32_t)mousePos.y - (int32_t)cursorSize / 2);
-	uint32_t endY = std::min(engine.grid.size.y - 1, mousePos.y + cursorSize / 2);
+	int startY = std::max(0, mousePos.y - cursorSize / 2);
+	int endY = std::min(engine.grid.size.y - 1, mousePos.y + cursorSize / 2);
 
-	for (uint32_t y = startY; y <= endY; y++)
-		for (uint32_t x = startX; x <= endX; x++)
+	for (int y = startY; y <= endY; y++)
+		for (int x = startX; x <= endX; x++)
 		{
-			Cell* cell = &engine.grid.grid[y * engine.grid.size.x + x];
+			Cell& cell = engine.grid.grid[y * engine.grid.size.x + x];
 
 			// I'm pretty sure the compiler optimizes this, so it shouldn't 
 			// actually be checking it each iteration in the release build
 			// and the debug build is unusable anyway so it doesn't matter
 			if (clear)
-				*cell = { 0, ParticleType::NullParticle };
+				cell = { 0, false };
 			else
-				if (cell->id == 0)
-					*cell = { currentSelectedId, false };
+				if (cell.m_elementId == 0)
+					cell = { currentSelectedId, false };
 		}
 }
 
 
-void Game::HandleEvents(SDL_Event& event)
+void Game::handleEvents(SDL_Event& event)
 {
 	while (SDL_PollEvent(&event))
 		switch (event.type)
@@ -137,17 +137,17 @@ void Game::HandleEvents(SDL_Event& event)
 }
 
 
-void Game::GameLoop()
+void Game::gameLoop()
 {
 	while (running)
 	{
 		// Everything having to do with the UI, user input and the game itself
 		SDL_GetMouseState(&mousePos.x, &mousePos.y);
-		mousePos.x /= pxPerUnit;
-		mousePos.y /= pxPerUnit;
+		mousePos.x /= g_pxPerUnit;
+		mousePos.y /= g_pxPerUnit;
 
 		SDL_Event event;
-		HandleEvents(event);
+		handleEvents(event);
 
 		if (mouseLeftDown)
 			fillCursorArea(false);
@@ -158,38 +158,38 @@ void Game::GameLoop()
 		// Everything engine related
 		if (!paused)
 		{
-			engine.Update();
+			engine.update();
 
-			// Test particles that spawn forever
-			for (uint32_t y = 20; y < 25; y++)
-				for (uint32_t x = 100; x < 105; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 1, false };
-			for (uint32_t y = 20; y < 25; y++)
-				for (uint32_t x = 550; x < 555; x++)
+			//Test particles that spawn forever
+			for (int y = 20; y < 25; y++)
+				for (int x = 100; x < 105; x++)
+					engine.grid.grid[y * engine.grid.size.x + x] = { 2, false };
+			for (int y = 20; y < 25; y++)
+				for (int x = 550; x < 555; x++)
 					engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
-			for (uint32_t y = 20; y < 25; y++)
-				for (uint32_t x = 1000; x < 1005; x++)
+			for (int y = 20; y < 25; y++)
+				for (int x = 1000; x < 1005; x++)
 					engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
 		}
 
 
 		// Everything graphics related
-		graphics.Render(graphics.pTexture, &engine.grid);
+		graphics.render(graphics.pTexture, engine.grid);
 
 
-		fpsCounter.Update();
+		fpsCounter.update();
 	}
 }
 
 
-void Game::Run()
+void Game::run()
 {
-	error(!Initialize(), "Game initialization failed. Aborting...\n");
+	catch_error(!initialize(), "Game initialization failed. Aborting...\n");
 
-	GameLoop();
+	gameLoop();
 
-	graphics.Shutdown();
+	graphics.shutdown();
 
-	fpsCounter.PrintStats();
+	fpsCounter.printStats();
 	std::cin.get();
 }

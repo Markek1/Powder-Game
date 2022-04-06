@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string_view>
 
 
 template <typename T>
@@ -33,11 +34,4 @@ public:
 };
 
 
-int32_t error(int32_t result, std::string errorMessage);
-
-
-//Marsaglia's xorshf generator (Fast Random Function)
-static uint32_t s_randX = 123456789;
-static uint32_t s_randY = 362436069;
-static uint32_t s_randZ = 521288629;
-uint32_t FastRand(void);
+bool catch_error(bool result, std::string_view errorMessage);
