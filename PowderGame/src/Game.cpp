@@ -162,13 +162,13 @@ void Game::gameLoop()
 
 			//Test particles that spawn forever
 			for (int y = 20; y < 25; y++)
-				for (int x = 100; x < 105; x++)
+				for (int x = 50; x < 55; x++)
 					engine.grid.grid[y * engine.grid.size.x + x] = { 2, false };
 			for (int y = 20; y < 25; y++)
-				for (int x = 550; x < 555; x++)
+				for (int x = 300; x < 305; x++)
 					engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
 			for (int y = 20; y < 25; y++)
-				for (int x = 1000; x < 1005; x++)
+				for (int x = 500; x < 505; x++)
 					engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
 		}
 

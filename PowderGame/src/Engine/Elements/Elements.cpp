@@ -10,7 +10,7 @@ std::vector<Element> elements
 	{ElementType::null, "NULL", {0, 0, 0, 255}, nullptr },
 	{ElementType::solid, "SAND", {128, 178, 194, 255}, &update_SolidMovable},
 	{ElementType::solid, "STNE", {133, 142, 145, 255}, &update_SolidMovable},
-	{ElementType::solid, "SNOW", {50, 224, 192, 255}, &update_SolidMovable},
+	{ElementType::solid, "SNOW", {255, 224, 192, 255}, &update_SolidMovable},
 	{ElementType::solid, "SALT", {253, 250, 243, 255}, &update_SolidMovable},
 	{ElementType::solid, "PLUT", {36, 166, 88, 255}, &update_SolidMovable},
 
