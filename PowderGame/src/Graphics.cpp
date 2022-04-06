@@ -114,21 +114,22 @@ void Graphics::render(SDL_Texture* texture, Grid& grid)
 	// as it will always be a multiple of four
 	pitch /= sizeof(uint32_t);
 
-	int yPx = 0;
-	for (int yU = 0; yU < grid.size.y; yU++)
-		for (int i = 0; i < pxPerUnit; i++, yPx++)
+	// For each cell puts the corresponding color value into the pixelBuffer
+	int yPixel = 0;
+	for (int yCell = 0; yCell < grid.size.y; yCell++)
+		for (int i = 0; i < cellToPixelScaleFactor; i++, yPixel++)
 		{
-			int xPx = 0;
-			for (int xU = 0; xU < grid.size.x; xU++)
-				for (int j = 0; j < pxPerUnit; j++, xPx++)
+			int xPixel = 0;
+			for (int xCell = 0; xCell < grid.size.x; xCell++)
+				for (int j = 0; j < cellToPixelScaleFactor; j++, xPixel++)
 				{
-					int pixelPos = yPx * windowSize.x + xPx;
-					int cellPos = yU * grid.size.x + xU;
+					int pixelPos = yPixel * windowSize.x + xPixel;
+					int cellPos = yCell * grid.size.x + xCell;
 
 					Cell& cell = grid.grid[cellPos];
 					Element& element = elements[cell.elementId];
 
-					// treating the 4 bytes as an unsigned int allows for fast conversion
+					//treating the 4 bytes as an unsigned int allows for fast conversion
 					pixelBuffer[pixelPos] = *((uint32_t*)element.color);
 				}
 		}

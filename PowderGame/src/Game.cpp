@@ -143,8 +143,8 @@ void Game::gameLoop()
 	{
 		// Everything having to do with the UI, user input and the game itself
 		SDL_GetMouseState(&mousePos.x, &mousePos.y);
-		mousePos.x /= pxPerUnit;
-		mousePos.y /= pxPerUnit;
+		mousePos.x /= cellToPixelScaleFactor;
+		mousePos.y /= cellToPixelScaleFactor;
 
 		SDL_Event event;
 		handleEvents(event);
