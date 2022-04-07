@@ -189,18 +189,11 @@ void Game::gameLoop()
 		// Everything engine related
 		if (!paused)
 		{
+			// This speed seems to be okay, but it might change at some point.
+			// I'm doing it like this instead of figuring out some fancy way to cap 
+			// the graphics at 60FPS while letting the engine run faster
 			engine.update();
-
-			//Test particles that spawn forever
-			//for (int y = 20; y < 25; y++)
-			//	for (int x = 50; x < 55; x++)
-			//		engine.grid.grid[y * engine.grid.size.x + x] = { 2, false };
-			//for (int y = 20; y < 25; y++)
-			//	for (int x = 300; x < 305; x++)
-			//		engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
-			//for (int y = 20; y < 25; y++)
-			//	for (int x = 500; x < 505; x++)
-			//		engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
+			engine.update();
 		}
 
 
