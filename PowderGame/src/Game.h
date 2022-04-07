@@ -32,7 +32,7 @@ private:
 	bool running = false;
 	bool paused = false;
 
-	uint8_t currentSelectedId{ 8 };
+	uint8_t currentSelectedId{ 9 };
 	bool mouseLeftDown = false;
 	bool mouseRightDown = false;
 	Vector2<int> mousePos;

@@ -35,3 +35,4 @@ public:
 
 
 bool catch_error(bool result, std::string_view errorMessage);
+unsigned long fastRand(void);

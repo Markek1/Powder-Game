@@ -5,6 +5,7 @@
 #include "Settings.h"
 
 #include "Engine/Engine.h"
+#include "Engine/Elements/Elements.h"
 
 
 bool FPSCounter::initialize()
@@ -39,7 +40,7 @@ void FPSCounter::printStats()
 
 bool Game::initialize()
 {
-	if (!catch_error(engine.initialize({ gridSize.x, gridSize.y}), "Engine initialization failed. Aborting...\n"))
+	if (!catch_error(engine.initialize({ gridSize.x, gridSize.y }), "Engine initialization failed. Aborting...\n"))
 		return false;
 
 	if (!catch_error(graphics.initialize(), "Graphics initialization failed. Aborting...\n"))
@@ -98,6 +99,24 @@ void Game::handleEvents(SDL_Event& event)
 			{
 			case SDLK_SPACE:
 				paused = !paused;
+
+				break;
+
+			case SDLK_q:
+				if (currentSelectedId == 1)
+					currentSelectedId = elements.size() - 1;
+				else
+					--currentSelectedId;
+
+				break;
+
+			case SDLK_e:
+				if (currentSelectedId == elements.size() - 1)
+					currentSelectedId = 1;
+				else
+					++currentSelectedId;
+
+				break;
 			}
 
 			break;
@@ -133,6 +152,11 @@ void Game::handleEvents(SDL_Event& event)
 			}
 
 			break;
+
+		case SDL_MOUSEWHEEL:
+			cursorSize = std::max(1, cursorSize + event.wheel.y);
+
+			break;
 		}
 }
 
@@ -161,15 +185,15 @@ void Game::gameLoop()
 			engine.update();
 
 			//Test particles that spawn forever
-			for (int y = 20; y < 25; y++)
-				for (int x = 50; x < 55; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 2, false };
-			for (int y = 20; y < 25; y++)
-				for (int x = 300; x < 305; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
-			for (int y = 20; y < 25; y++)
-				for (int x = 500; x < 505; x++)
-					engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
+			//for (int y = 20; y < 25; y++)
+			//	for (int x = 50; x < 55; x++)
+			//		engine.grid.grid[y * engine.grid.size.x + x] = { 2, false };
+			//for (int y = 20; y < 25; y++)
+			//	for (int x = 300; x < 305; x++)
+			//		engine.grid.grid[y * engine.grid.size.x + x] = { 3, false };
+			//for (int y = 20; y < 25; y++)
+			//	for (int x = 500; x < 505; x++)
+			//		engine.grid.grid[y * engine.grid.size.x + x] = { 5, false };
 		}
 
 
@@ -184,7 +208,7 @@ void Game::gameLoop()
 
 void Game::run()
 {
-	catch_error(!initialize(), "Game initialization failed. Aborting...\n");
+	catch_error(initialize(), "Game initialization failed. Aborting...\n");
 
 	gameLoop();
 
