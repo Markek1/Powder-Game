@@ -36,7 +36,7 @@
     <ClCompile Include="src\Engine\Elements\Elements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Elements\UpdateFunctions\SolidMovable.cpp">
+    <ClCompile Include="src\Engine\Elements\UpdateFunctions\Powder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Liquid.cpp">

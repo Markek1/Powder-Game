@@ -117,6 +117,13 @@ void Game::handleEvents(SDL_Event& event)
 					++currentSelectedId;
 
 				break;
+
+			case SDLK_c:
+				for (int y = 0; y < engine.grid.size.y; ++y)
+					for (int x = 0; x < engine.grid.size.x; ++x)
+						engine.grid.grid[y * engine.grid.size.x + x] = { 0, false };
+
+				break;
 			}
 
 			break;

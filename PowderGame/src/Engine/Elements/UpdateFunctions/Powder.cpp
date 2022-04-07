@@ -18,7 +18,7 @@ static bool tryMoveTo(Cell& sourceCell, Cell& targetCell)
 }
 
 
-bool update_SolidMovable(int x, int y, Grid& grid)
+bool update_Powder(int x, int y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
 	sourceCell.processed = true;
