@@ -5,9 +5,11 @@
 #include "UpdateFunctions/UpdateFunctions.h"
 
 
+Element nullElement{ElementType::null, "NULL", {0, 0, 0, 255} };
+
 std::vector<Element> elements
 {
-	{ElementType::null, "NULL", {0, 0, 0, 255}, nullptr },
+	nullElement,
 
 	{ElementType::solid, "SAND", {128, 178, 194, 255}, &update_Powder},
 	{ElementType::solid, "STNE", {133, 142, 145, 255}, &update_Powder},
@@ -19,7 +21,7 @@ std::vector<Element> elements
 	{ElementType::solid, "WOOD", {64, 160, 192, 255}, nullptr},
 	{ElementType::solid, "GOLD", {44, 169, 221, 255}, nullptr},
 
-	{ElementType::liquid, "WATR", {208, 48, 32, 255}, &update_Liquid},
-	{ElementType::liquid, "LAVA", {128, 192, 255, 255}, &update_Liquid},
-	{ElementType::liquid, "ACID", {255, 163, 255, 255}, &update_Liquid},
+	{ElementType::liquid, "WATR", {208, 48, 32, 255}, &update_Liquid, 8},
+	{ElementType::liquid, "LAVA", {23, 112, 255, 255}, &update_Liquid, 2},
+	{ElementType::liquid, "ACID", {255, 163, 255, 255}, &update_Liquid, 8},
 };

@@ -20,57 +20,65 @@ static bool tryMoveTo(Cell& sourceCell, Cell& targetCell)
 }
 
 
-static bool tryMoveBottomLeft(int x, int y, Grid& grid)
+static bool tryMoveBottomLeft(int& x, int& y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
 
 	if (x >= 1
 		&& tryMoveTo(sourceCell, grid.grid[(y + 1) * grid.size.x + x - 1]))
 	{
+		++y, --x;
 		return true;
 	}
+
 
 	return false;
 }
 
 
-static bool tryMoveBottomRight(int x, int y, Grid& grid)
+static bool tryMoveBottomRight(int& x, int& y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
 
 	if (x <= grid.size.x - 2
 		&& tryMoveTo(sourceCell, grid.grid[(y + 1) * grid.size.x + x + 1]))
 	{
+		++y, ++x;
 		return true;
 	}
+
 
 	return false;
 }
 
 
-static bool tryMoveLeft(int x, int y, Grid& grid)
+static bool tryMoveLeft(int& x, int& y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
 
 	if (x >= 1
 		&& tryMoveTo(sourceCell, grid.grid[y * grid.size.x + x - 1]))
 	{
+		--x;
 		return true;
 	}
+
 
 	return false;
 }
 
 
-static bool tryMoveRight(int x, int y, Grid& grid)
+static bool tryMoveRight(int& x, int& y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
 
 	if (x <= grid.size.x - 2
 		&& tryMoveTo(sourceCell, grid.grid[y * grid.size.x + x + 1]))
 	{
+		++x;
 		return true;
 	}
+
 
 	return false;
 }
@@ -79,51 +87,57 @@ static bool tryMoveRight(int x, int y, Grid& grid)
 bool update_Liquid(int x, int y, Grid& grid)
 {
 	Cell& sourceCell = grid.grid[y * grid.size.x + x];
+	Element& element = elements[sourceCell.elementId];
 	sourceCell.processed = true;
 
 	unsigned long random = fastRand();
 
-	if (y < grid.size.y - 1)
+	for (int i{ 0 }; i < element.spreadFactor; ++i)
 	{
-		if (tryMoveTo(sourceCell, grid.grid[(y + 1) * grid.size.x + x]))
+		Cell& sourceCell = grid.grid[y * grid.size.x + x];
+		if (y < grid.size.y - 1)
 		{
-			return true;
+			if (tryMoveTo(sourceCell, grid.grid[(y + 1) * grid.size.x + x]))
+			{
+				continue;
+				++y;
+			}
+
+			switch (random % 2)
+			{
+			case 0:
+				if (tryMoveBottomLeft(x, y, grid)
+					|| tryMoveBottomRight(x, y, grid))
+					continue;
+
+				break;
+
+			case 1:
+				if (tryMoveBottomRight(x, y, grid)
+					|| tryMoveBottomLeft(x, y, grid))
+					continue;
+
+				break;
+			}
 		}
 
 		switch (random % 2)
 		{
 		case 0:
-			if (tryMoveBottomLeft(x, y , grid)
-				|| tryMoveBottomRight(x, y, grid))
-				return true;
+			if (tryMoveRight(x, y, grid)
+				|| tryMoveLeft(x, y, grid))
+				continue;
 
 			break;
 
 		case 1:
-			if (tryMoveBottomRight(x, y, grid)
-				|| tryMoveBottomLeft(x, y, grid))
-				return true;
+			if (tryMoveLeft(x, y, grid)
+				|| tryMoveRight(x, y, grid))
+				continue;
 
 			break;
 		}
+
+		return false;
 	}
-
-	switch (random % 2)
-	{
-	case 0:
-		if (tryMoveRight(x, y, grid)
-			|| tryMoveLeft(x, y, grid))
-			return true;
-
-		break;
-
-	case 1:
-		if (tryMoveLeft(x, y, grid)
-			|| tryMoveRight(x, y, grid))
-			return true;
-
-		break;
-	}
-
-	return false;
 }
