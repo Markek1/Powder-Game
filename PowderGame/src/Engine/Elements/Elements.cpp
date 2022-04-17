@@ -5,7 +5,7 @@
 #include "UpdateFunctions/UpdateFunctions.h"
 
 
-Element nullElement{ElementType::null, "NULL", {0, 0, 0, 255} };
+Element nullElement{ ElementType::null, "NULL", {0, 0, 0, 255} };
 
 std::vector<Element> elements
 {
@@ -24,4 +24,8 @@ std::vector<Element> elements
 	{ElementType::liquid, "WATR", {208, 48, 32, 255}, &update_Liquid, 8},
 	{ElementType::liquid, "LAVA", {23, 112, 255, 255}, &update_Liquid, 2},
 	{ElementType::liquid, "ACID", {255, 163, 255, 255}, &update_Liquid, 8},
+
+	{ElementType::gas, "OXYG", {255, 160, 128, 255}, &update_Gas},
+	{ElementType::gas, "SMKE", {100, 100, 100, 255}, &update_Gas},
+	{ElementType::gas, "WTRV", {255, 160, 160, 255}, &update_Gas}
 };
