@@ -5,7 +5,7 @@
 #include "Settings.h"
 
 #include "Engine/Engine.h"
-#include "Engine/Elements/Elements.h"
+#include "Engine/Elements/Element.h"
 
 
 bool FPSCounter::initialize()
@@ -40,16 +40,16 @@ void FPSCounter::printStats()
 
 bool Game::initialize()
 {
-	if (!catch_error(engine.initialize({ gridSize.x, gridSize.y }), "Engine initialization failed. Aborting...\n"))
+	if (!catchError(engine.initialize({ gridSize.x, gridSize.y }), "Engine initialization failed. Aborting...\n"))
 		return false;
 
-	if (!catch_error(graphics.initialize(), "Graphics initialization failed. Aborting...\n"))
+	if (!catchError(graphics.initialize(), "Graphics initialization failed. Aborting...\n"))
 	{
 		graphics.shutdown();
 		return false;
 	}
 
-	if (!catch_error(fpsCounter.initialize(), "FPS counter initialization failed. Aborting...\n"))
+	if (!catchError(fpsCounter.initialize(), "FPS counter initialization failed. Aborting...\n"))
 		return false;
 
 	running = true;
@@ -208,7 +208,7 @@ void Game::gameLoop()
 
 void Game::run()
 {
-	catch_error(initialize(), "Game initialization failed. Aborting...\n");
+	catchError(initialize(), "Game initialization failed. Aborting...\n");
 
 	gameLoop();
 

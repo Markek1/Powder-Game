@@ -3,7 +3,7 @@
 
 #include "Engine.h"
 
-#include "Elements/Elements.h"
+#include "Elements/Element.h"
 
 #include "../Helpers.h"
 
@@ -21,7 +21,7 @@ bool Grid::initialize(Vector2<int> size_)
 
 bool Engine::initialize(Vector2<int> size_)
 {
-	if (!catch_error(grid.initialize(size_), "Grid initialization failed. Aborting...\n"))
+	if (!catchError(grid.initialize(size_), "Grid initialization failed. Aborting...\n"))
 		return false;
 
 	return true;

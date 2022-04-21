@@ -152,7 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Elements\Elements.cpp" />
+    <ClCompile Include="src\Engine\Elements\Element.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Gas.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Liquid.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Powder.cpp" />
@@ -164,7 +164,8 @@
     <ClCompile Include="src\Settings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Elements\Elements.h" />
+    <ClInclude Include="src\Engine\Elements\Element.h" />
+    <ClInclude Include="src\Engine\Elements\UpdateFunctions\IUpdateFunction.h" />
     <ClInclude Include="src\Engine\Elements\UpdateFunctions\UpdateFunctions.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Game.h" />

@@ -33,7 +33,7 @@
     <ClCompile Include="src\Settings.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Elements\Elements.cpp">
+    <ClCompile Include="src\Engine\Elements\Element.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Powder.cpp">
@@ -59,10 +59,13 @@
     <ClInclude Include="src\Engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Elements\Elements.h">
+    <ClInclude Include="src\Engine\Elements\Element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Elements\UpdateFunctions\UpdateFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Elements\UpdateFunctions\IUpdateFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
