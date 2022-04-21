@@ -20,10 +20,9 @@ SDL_Window* Graphics::createCenteredWindow(int width, int height, const char* ti
 	int x = DM.w / 2 - width / 2;
 	int y = DM.h / 2 - height / 2;
 
-	SDL_Window* window = SDL_CreateWindow(title, x, y, width, height,
-		SDL_WINDOW_ALLOW_HIGHDPI);
+	SDL_Window* window = SDL_CreateWindow(title, x, y, width, height, SDL_WINDOW_ALLOW_HIGHDPI);
 
-	catch_error(window, "Failed to create Window\n");
+	catchError(window, "Failed to create Window\n");
 
 	return window;
 }
@@ -35,7 +34,7 @@ SDL_Texture* Graphics::createBackBufferTexture(SDL_Renderer* renderer)
 	SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
 		SDL_TEXTUREACCESS_STREAMING, windowSize.x, windowSize.y);
 
-	catch_error(texture, "Failed to create Back Buffer Texture\n");
+	catchError(texture, "Failed to create Back Buffer Texture\n");
 
 	return texture;
 }
@@ -69,7 +68,7 @@ bool Graphics::initialize()
 
 	window = createCenteredWindow(windowSize.x, windowSize.y, windowTitle);
 
-	if (!catch_error(window, "No Window. Aborting..."))
+	if (!catchError(window, "No Window. Aborting..."))
 	{
 		shutdown();
 
@@ -79,7 +78,7 @@ bool Graphics::initialize()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED + SDL_RENDERER_PRESENTVSYNC);
 	//renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	if (!catch_error(renderer, "No Renderer. Aborting..."))
+	if (!catchError(renderer, "No Renderer. Aborting..."))
 	{
 		shutdown();
 
@@ -88,7 +87,7 @@ bool Graphics::initialize()
 
 	texture = createBackBufferTexture(renderer);
 
-	if (!catch_error(texture, "No back buffer Texture. Aborting..."))
+	if (!catchError(texture, "No back buffer Texture. Aborting..."))
 	{
 		shutdown();
 
