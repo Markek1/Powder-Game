@@ -7,7 +7,7 @@ static bool tryMoveTo(Cell& sourceCell, Cell& targetCell)
 {
 	Element& targetElement = elements[targetCell.elementId];
 
-	if (targetElement.type == ElementType::null)
+	if (targetElement.type == ElementType::null || targetElement.type == ElementType::gas)
 	{
 		std::swap(sourceCell, targetCell);
 

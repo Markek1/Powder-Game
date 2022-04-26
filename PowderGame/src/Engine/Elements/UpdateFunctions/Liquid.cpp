@@ -6,7 +6,38 @@
 
 static bool tryMoveTo(Cell& sourceCell, Cell& targetCell)
 {
+	Element& sourceElement = elements[sourceCell.elementId];
 	Element& targetElement = elements[targetCell.elementId];
+
+	switch (sourceCell.elementId)
+	{
+	case ElementId::LAVA:
+		if (targetCell.elementId == ElementId::WATR)
+		{
+			sourceCell.elementId = ElementId::STNE;
+			targetCell.elementId = ElementId::STNE;
+			return true;
+		}
+
+		break;
+
+	case ElementId::WATR:
+		if (targetCell.elementId == ElementId::LAVA)
+		{
+			sourceCell.elementId = ElementId::OBSD;
+			targetCell.elementId = ElementId::OBSD;
+			return true;
+		}
+
+		break;
+	}
+
+	if (targetElement.type == ElementType::liquid && sourceCell.elementId != targetCell.elementId)
+	{
+		if (fastRand() < sourceElement.spreadFactor * 1000000)
+			std::swap(sourceCell, targetCell);
+		return true;
+	}
 
 	if (targetElement.type != ElementType::solid
 		&& targetElement.type != ElementType::liquid)

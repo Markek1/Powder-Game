@@ -27,5 +27,33 @@ public:
 	int spreadFactor{ 1 };
 };
 
+namespace ElementId
+{
+	enum ElementId {
+		NONE,
+		SAND,
+		STNE,
+		SNOW,
+		SALT,
+		PLUT,
 
-extern std::vector<Element> elements;
+		IRON,
+		WOOD,
+		GOLD,
+		OBSD,
+
+		WATR,
+		LAVA,
+		ACID,
+
+		OXYG,
+		SMKE,
+		WTRV,
+
+
+		NUM_ITEMS
+	};
+}
+
+inline std::vector<Element> elements;
+void initializeElements();

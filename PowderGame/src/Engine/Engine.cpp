@@ -21,6 +21,8 @@ bool Grid::initialize(Vector2<int> size_)
 
 bool Engine::initialize(Vector2<int> size_)
 {
+	initializeElements();
+
 	if (!catchError(grid.initialize(size_), "Grid initialization failed. Aborting...\n"))
 		return false;
 
