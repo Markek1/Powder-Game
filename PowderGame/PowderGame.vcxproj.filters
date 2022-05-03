@@ -45,6 +45,9 @@
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Gas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Elements\UpdateFunctions\Fire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">

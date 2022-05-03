@@ -25,6 +25,8 @@ public:
 
 	// How many times a particle should try to move per update
 	int spreadFactor{ 1 };
+
+	float flammability{ 0 };
 };
 
 namespace ElementId
@@ -49,6 +51,8 @@ namespace ElementId
 		OXYG,
 		SMKE,
 		WTRV,
+
+		FIRE,
 
 
 		NUM_ITEMS

@@ -69,7 +69,8 @@ void initializeElements()
 	.type = ElementType::solid,
 	.name = "WOOD",
 	.color = {64,  160, 192, 255},
-	.update = nullptr
+	.update = nullptr,
+	.flammability = 0.005
 	};
 
 	elements[ElementId::GOLD] =
@@ -121,6 +122,7 @@ void initializeElements()
 	.name = "OXYG",
 	.color = {255, 160, 128, 255},
 	.update = &update_Gas,
+	.flammability = 0.3
 	};
 
 	elements[ElementId::SMKE] =
@@ -131,12 +133,19 @@ void initializeElements()
 	.update = &update_Gas,
 	};
 
-
 	elements[ElementId::WTRV] =
 	{
 	.type = ElementType::gas,
 	.name = "WTRV",
 	.color = { 255, 160, 160, 255 },
 	.update = &update_Gas,
+	};
+
+	elements[ElementId::FIRE] =
+	{
+	.type = ElementType::gas,
+	.name = "FIRE",
+	.color = { 20, 110, 255, 255 },
+	.update = &update_Fire,
 	};
 }

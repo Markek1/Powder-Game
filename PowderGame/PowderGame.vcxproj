@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Elements\Element.cpp" />
+    <ClCompile Include="src\Engine\Elements\UpdateFunctions\Fire.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Gas.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Liquid.cpp" />
     <ClCompile Include="src\Engine\Elements\UpdateFunctions\Powder.cpp" />
