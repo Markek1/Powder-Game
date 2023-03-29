@@ -1,5 +1,5 @@
 # Powder-Game
-Trying to make something similar to Powder Toy or those older physics browser games.
+Trying to make something similar to Powder Toy or those older browser physics games.
 
 
 
